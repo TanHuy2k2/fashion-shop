@@ -4,12 +4,12 @@ import { ProductEntity } from './product.entity';
 
 @Entity({ name: 'brands' })
 export class BrandEntity extends AbstractEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @OneToMany(() => ProductEntity, (product) => product.brand)
-    product: ProductEntity[];
+  @OneToMany(() => ProductEntity, (product) => product.brand)
+  product: ProductEntity[];
 }
