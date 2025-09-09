@@ -1,21 +1,26 @@
-import { Column, CreateDateColumn, UpdateDateColumn, UpdateEvent } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  UpdateEvent,
+} from 'typeorm';
 
 export abstract class AbstractEntity {
-    @CreateDateColumn({ name: 'created_at' })
-    createdAt: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-    @UpdateDateColumn({ name: 'updated_at' })
-    updatedAt: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 
-    @Column({ name: 'created_by', nullable: true })
-    createdBy: number;
+  @Column({ name: 'created_by', nullable: true })
+  createdBy: number;
 
-    @Column({ name: 'updated_by', nullable: true })
-    updatedBy: number;
+  @Column({ name: 'updated_by', nullable: true })
+  updatedBy: number;
 
-    beforeUpdate(event: UpdateEvent<AbstractEntity>) {
-        if (event.entity) {
-            event.entity.updatedAt = new Date();
-        }
+  beforeUpdate(event: UpdateEvent<AbstractEntity>) {
+    if (event.entity) {
+      event.entity.updatedAt = new Date();
     }
+  }
 }

@@ -4,15 +4,15 @@ import { ProductItemEntity } from './product-item.entity';
 
 @Entity({ name: 'colors' })
 export class ColorEntity extends AbstractEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column({ name: 'hex_code' })
-    hexCode: string;
+  @Column({ name: 'hex_code' })
+  hexCode: string;
 
-    @OneToMany(() => ProductItemEntity, (productItem) => productItem.color)
-    productItem: ProductItemEntity[];
+  @OneToMany(() => ProductItemEntity, (productItem) => productItem.color)
+  productItem: ProductItemEntity[];
 }
