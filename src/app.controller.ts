@@ -11,15 +11,21 @@ export class AppController {
     return { title: 'Website' };
   }
 
-  @Get('/login')
+  @Get('login')
   @Render('login')
   loginPage() {
     return { title: 'Login' };
   }
 
-  @Get('/register')
+  @Get('register')
   @Render('register')
   registerPage() {
     return { title: 'register' };
+  }
+
+  @Get('profile')
+  @Render('profile')
+  profile() {
+    return { title: 'profile' };
   }
 }

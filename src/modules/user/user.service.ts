@@ -4,7 +4,7 @@ import {
   ForbiddenException,
   Inject,
   Injectable,
-  Req,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,12 +12,13 @@ import { UserEntity } from 'src/database/entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserInterface } from './interface/user.interface';
 import { RegisterDto } from './dto/register.dto';
-import { SALT_OF_ROUND } from 'src/constants/constant';
+import { DEFAULT_IMAGE, SALT_OF_ROUND } from 'src/constants/constant';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import Redis from 'ioredis';
 import { Request } from 'express';
+import { UpdateInfoDto } from './dto/update-info.dto';
 
 @Injectable()
 export class UserService {
@@ -26,7 +27,11 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
     private jwtService: JwtService,
     @Inject('REDIS_CLIENT') private readonly redis: Redis,
-  ) { }
+  ) {}
+
+  async findOneById(id: string): Promise<UserInterface | null> {
+    return await this.userRepository.findOneBy({ id });
+  }
 
   async findOneByEmail(email: string): Promise<UserInterface | null> {
     return await this.userRepository.findOneBy({ email });
@@ -57,7 +62,13 @@ export class UserService {
     }
 
     const hashedPassword = await bcrypt.hash(password, SALT_OF_ROUND);
-    return await this.userRepository.save({ email, password: hashedPassword, phone, ...newUser });
+    return await this.userRepository.save({
+      email,
+      password: hashedPassword,
+      image: DEFAULT_IMAGE,
+      phone,
+      ...newUser,
+    });
   }
 
   async login(data: LoginDto, req: Request) {
@@ -68,7 +79,7 @@ export class UserService {
     const match = await bcrypt.compare(password, user.password);
     if (!match) throw new UnauthorizedException("Password isn't correct!");
 
-    const payload = { id: user.id, name: user.firstName + ' ' + user.lastName };
+    const payload = { id: user.id, name: user.fullName };
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_ACCESS_SECRET,
       expiresIn: '1d',
@@ -140,5 +151,23 @@ export class UserService {
   async logout(userId: string) {
     await this.redis.del(`session:${userId}`);
     return { success: true };
+  }
+
+  async update(userId: string, data: UpdateInfoDto) {
+    try {
+      const userById = await this.findOneById(userId);
+      if (!userById) {
+        throw new NotFoundException(`User with user id=${userId} not found`);
+      }
+
+      const user = await this.findOneByEmail(data.email);
+      if (user) {
+        throw new ConflictException('Email already existed!');
+      } 
+
+      return await this.userRepository.save({ id: userId, ...data });
+    } catch (error) {
+      throw error;
+    }
   }
 }

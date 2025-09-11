@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/database/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { RedisModule } from '../redis/redis.module';
-import { AuthGuard } from 'src/commons/gaurds/auth.guard';
+import { AuthGuard } from 'src/commons/guards/auth.guard';
 
 @Module({
   imports: [
