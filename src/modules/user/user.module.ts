@@ -3,10 +3,17 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/database/entities/user.entity';
+import { JwtModule } from '@nestjs/jwt';
+import { RedisModule } from '../redis/redis.module';
+import { AuthGuard } from 'src/commons/gaurds/auth.guard';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity])],
+  imports: [
+    JwtModule.register({}),
+    TypeOrmModule.forFeature([UserEntity]),
+    RedisModule,
+  ],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, AuthGuard],
 })
 export class UserModule {}
