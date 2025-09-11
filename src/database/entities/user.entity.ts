@@ -2,7 +2,6 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
   OneToMany,
 } from 'typeorm';
 import { AbstractEntity } from './abstract.entity';
@@ -13,13 +12,13 @@ import { ReviewEntity } from './review.entity';
 @Entity({ name: 'users' })
 export class UserEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
-  @Column({ name: 'first_name' })
-  firstName: string;
+  @Column({ name: 'full_name' })
+  fullName: string;s
 
-  @Column({ name: 'last_name' })
-  lastName: string;
+  @Column()
+  image: string;
 
   @Column({ unique: true })
   email: string;
