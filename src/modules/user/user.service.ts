@@ -19,6 +19,8 @@ import { JwtService } from '@nestjs/jwt';
 import Redis from 'ioredis';
 import { Request } from 'express';
 import { UpdateInfoDto } from './dto/update-info.dto';
+import { send } from 'src/utils/mail';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Injectable()
 export class UserService {
@@ -163,11 +165,46 @@ export class UserService {
       const user = await this.findOneByEmail(data.email);
       if (user) {
         throw new ConflictException('Email already existed!');
-      } 
+      }
 
       return await this.userRepository.save({ id: userId, ...data });
     } catch (error) {
       throw error;
     }
+  }
+
+  async sendMail(email: string) {
+    const user = await this.findOneByEmail(email);
+    if (!user) throw new UnauthorizedException('Account not activated!');
+
+    const { success, code } = await send(email);
+    if (code) {
+      await this.redis.set(`otp:${email}`, String(code), 'EX', 5 * 60);
+    }
+
+    return success;
+  }
+
+  async changePassword(data: ChangePasswordDto) {
+    const { email, password, rePassword, code } = data;
+    const user = await this.findOneByEmail(email);
+    if (!user) throw new UnauthorizedException('Account not activated!');
+
+    if (password !== rePassword) {
+      throw new BadRequestException('Passwords do not match');
+    }
+
+    const session = await this.redis.get(`otp:${email}`);
+    if (!session) throw new UnauthorizedException('Session not found');
+    const parsed = JSON.parse(session);
+    if (String(parsed) !== code) {
+      throw new BadRequestException('Code do not match');
+    }
+    
+    const hashedPassword = await bcrypt.hash(password, SALT_OF_ROUND);
+    return await this.userRepository.save({
+      id: user.id,
+      password: hashedPassword,
+    });
   }
 }

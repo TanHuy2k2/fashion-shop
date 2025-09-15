@@ -28,4 +28,16 @@ export class AppController {
   profile() {
     return { title: 'profile' };
   }
+
+  @Get('forgot-password')
+  @Render('forgot-password')
+  forgotPassword() {
+    return { title: 'Forgot password' };
+  }
+
+  @Get('change-password')
+  @Render('change-password')
+  changePassword() {
+    return { title: 'Change password' };
+  }
 }

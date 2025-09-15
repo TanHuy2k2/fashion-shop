@@ -15,6 +15,7 @@ import { LoginDto } from './dto/login.dto';
 import { Public } from 'src/commons/decorators/public.decorator';
 import { UploadImageInterceptor } from 'src/commons/interceptors/upload-image.interceptor';
 import { UpdateInfoDto } from './dto/update-info.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -60,5 +61,15 @@ export class UserController {
       ...data,
       ...(image && { image }),
     });
+  }
+
+  @Post('send-mail')
+  sendMail(@Body('email') email: string) {
+    return this.userService.sendMail(email);
+  }
+
+  @Post('change-password')
+  changePassword(@Body() data: ChangePasswordDto) {
+    return this.userService.changePassword(data);
   }
 }
