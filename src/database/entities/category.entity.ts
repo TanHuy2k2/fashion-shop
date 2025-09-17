@@ -5,11 +5,14 @@ import { SubCategoryEntity } from './sub-category.entity';
 @Entity({ name: 'categories' })
 export class CategoryEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   name: string;
 
   @OneToMany(() => SubCategoryEntity, (subCategory) => subCategory.category)
   subCategory: SubCategoryEntity[];
+
+  @Column({ type: 'boolean', name: 'is_deleted', default: false })
+  isDeleted: boolean;
 }

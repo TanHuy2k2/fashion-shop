@@ -10,11 +10,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './commons/guards/auth.guard';
 import { RolesGuard } from './commons/guards/roles.guard';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
     UserModule,
     AdminModule,
+    CategoryModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
