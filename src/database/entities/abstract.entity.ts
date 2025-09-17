@@ -13,10 +13,10 @@ export abstract class AbstractEntity {
   updatedAt: Date;
 
   @Column({ name: 'created_by', nullable: true })
-  createdBy: number;
+  createdBy: string;
 
   @Column({ name: 'updated_by', nullable: true })
-  updatedBy: number;
+  updatedBy: string;
 
   beforeUpdate(event: UpdateEvent<AbstractEntity>) {
     if (event.entity) {

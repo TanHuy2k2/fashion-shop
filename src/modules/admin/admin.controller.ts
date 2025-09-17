@@ -7,16 +7,16 @@ import { Role } from 'src/commons/enums/role.enum';
 export class AdminController {
   @Public()
   @Get()
-  @Render('admin/login')
+  @Render('admin/login-page')
   login() {
-    return { layout: 'login-admin', title: 'Login' };
+    return { layout: 'login-admin-layout', title: 'Login' };
   }
 
   @Public()
   @Get('dashboard')
-  @Render('admin/dashboard')
+  @Render('admin/dashboard-page')
   dashboard() {
-    return { isDashboard: true, layout: 'admin', title: 'Dashboard' };
+    return { isDashboard: true, layout: 'admin-layout', title: 'Dashboard' };
   }
 
   @Roles(Role.ADMIN)
@@ -26,9 +26,16 @@ export class AdminController {
   }
 
   @Public()
+  @Get('categories')
+  @Render('admin/category-page')
+  category() {
+    return { isCategories: true, layout: 'admin-layout', title: 'Categories' };
+  }
+
+  @Public()
   @Get('products')
-  @Render('admin/product')
+  @Render('admin/product-page')
   product() {
-    return { isProducts: true, layout: 'admin', title: 'Product' };
+    return { isProducts: true, layout: 'admin-layout', title: 'Product' };
   }
 }
