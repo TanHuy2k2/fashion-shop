@@ -81,7 +81,7 @@ export class UserService {
     const match = await bcrypt.compare(password, user.password);
     if (!match) throw new UnauthorizedException("Password isn't correct!");
 
-    const payload = { id: user.id, name: user.fullName };
+    const payload = { id: user.id, name: user.fullName, role: user.role };
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_ACCESS_SECRET,
       expiresIn: '1d',
@@ -141,6 +141,7 @@ export class UserService {
     const newPayload = {
       id: payload.id,
       name: payload.name,
+      role: payload.role,
     };
     const newAccessToken = await this.jwtService.signAsync(newPayload, {
       secret: process.env.JWT_ACCESS_SECRET,
@@ -163,7 +164,7 @@ export class UserService {
       }
 
       const user = await this.findOneByEmail(data.email);
-      if (user) {
+      if (user && user.id !== userId) {
         throw new ConflictException('Email already existed!');
       }
 
@@ -200,7 +201,7 @@ export class UserService {
     if (String(parsed) !== code) {
       throw new BadRequestException('Code do not match');
     }
-    
+
     const hashedPassword = await bcrypt.hash(password, SALT_OF_ROUND);
     return await this.userRepository.save({
       id: user.id,

@@ -6,17 +6,12 @@ import {
   MinLength,
   IsPhoneNumber,
   IsOptional,
-  IsInt,
 } from 'class-validator';
 
 export class RegisterDto {
   @IsString()
   @IsNotEmpty()
-  lastName: string;
-
-  @IsString()
-  @IsNotEmpty()
-  firstName: string;
+  fullName: string;
 
   @IsEmail()
   @IsNotEmpty()

@@ -1,3 +1,5 @@
+import { Role } from 'src/commons/enums/role.enum';
+
 export interface UserInterface {
   id: string;
   fullName: string;
@@ -7,4 +9,5 @@ export interface UserInterface {
   dateOfBirth: Date;
   phone: string;
   address: string;
+  role: Role;
 }

@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/database/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { RedisModule } from '../redis/redis.module';
-import { AuthGuard } from 'src/commons/guards/auth.guard';
 
 @Module({
   imports: [
@@ -14,6 +13,6 @@ import { AuthGuard } from 'src/commons/guards/auth.guard';
     RedisModule,
   ],
   controllers: [UserController],
-  providers: [UserService, AuthGuard],
+  providers: [UserService],
 })
 export class UserModule {}
