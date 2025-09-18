@@ -24,6 +24,10 @@ export class CategoryService {
     const [data, total] = await this.categoryRepository.findAndCount({
       skip: (page - 1) * PAGE_SIZE,
       take: PAGE_SIZE,
+      order: {
+        isDeleted: 'ASC',
+        createdAt: 'ASC',
+      },
     });
 
     return {
@@ -75,7 +79,11 @@ export class CategoryService {
     }
   }
 
-  async softDelete(id: string, userId: string): Promise<CategoryInterface> {
+  async updateDeleteStatus(
+    id: string,
+    userId: string,
+    isDeleted: boolean,
+  ): Promise<CategoryInterface> {
     try {
       const categoryById = await this.findById(id);
       if (!categoryById) {
@@ -84,7 +92,7 @@ export class CategoryService {
 
       return await this.categoryRepository.save({
         id,
-        isDeleted: true,
+        isDeleted: isDeleted,
         updatedBy: userId,
       });
     } catch (error) {
