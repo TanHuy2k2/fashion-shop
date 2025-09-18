@@ -40,6 +40,11 @@ export class CategoryController {
 
   @Patch('soft-delete/:categoryId')
   softDelete(@Req() req, @Param('categoryId') id: string) {
-    return this.categoryService.softDelete(id, req.user.id);
+    return this.categoryService.updateDeleteStatus(id, req.user.id, true);
+  }
+
+  @Patch('restore/:categoryId')
+  restore(@Req() req, @Param('categoryId') id: string) {
+    return this.categoryService.updateDeleteStatus(id, req.user.id, false);
   }
 }

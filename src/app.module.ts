@@ -11,12 +11,14 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './commons/guards/auth.guard';
 import { RolesGuard } from './commons/guards/roles.guard';
 import { CategoryModule } from './modules/category/category.module';
+import { BrandModule } from './modules/brand/brand.module';
 
 @Module({
   imports: [
     UserModule,
     AdminModule,
     CategoryModule,
+    BrandModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
