@@ -13,7 +13,7 @@ import { ProductEntity } from './product.entity';
 @Entity({ name: 'sub-category' })
 export class SubCategoryEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   name: string;

@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   UpdateDateColumn,
   UpdateEvent,
 } from 'typeorm';
@@ -23,4 +24,7 @@ export abstract class AbstractEntity {
       event.entity.updatedAt = new Date();
     }
   }
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: Date;
 }

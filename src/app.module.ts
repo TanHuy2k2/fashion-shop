@@ -12,6 +12,7 @@ import { AuthGuard } from './commons/guards/auth.guard';
 import { RolesGuard } from './commons/guards/roles.guard';
 import { CategoryModule } from './modules/category/category.module';
 import { BrandModule } from './modules/brand/brand.module';
+import { SubCategoryModule } from './modules/sub-category/sub-category.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { BrandModule } from './modules/brand/brand.module';
     AdminModule,
     CategoryModule,
     BrandModule,
+    SubCategoryModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
