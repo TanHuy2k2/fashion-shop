@@ -13,6 +13,7 @@ import { RolesGuard } from './commons/guards/roles.guard';
 import { CategoryModule } from './modules/category/category.module';
 import { BrandModule } from './modules/brand/brand.module';
 import { SubCategoryModule } from './modules/sub-category/sub-category.module';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { SubCategoryModule } from './modules/sub-category/sub-category.module';
     CategoryModule,
     BrandModule,
     SubCategoryModule,
+    ProductModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

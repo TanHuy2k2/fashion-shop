@@ -15,12 +15,12 @@ import { ReviewEntity } from './review.entity';
 @Entity({ name: 'products' })
 export class ProductEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   name: string;
 
-  @Column()
+  @Column({ type: 'text' })
   description: string;
 
   @ManyToOne(() => BrandEntity, (brand) => brand.product, {

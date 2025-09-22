@@ -37,6 +37,18 @@ export class SubCategoryService {
     });
   }
 
+  async findByName(
+    subCategoryName: string,
+  ): Promise<SubCategoryInterface | null> {
+    const subCategory = await this.subCategoryRepository.findOne({
+      where: { name: subCategoryName },
+      relations: ['category'],
+    });
+    if (subCategory) return SubCategoryMapper.toResponse(subCategory);
+
+    return null;
+  }
+
   async findById(id: string): Promise<SubCategoryInterface | null> {
     const subCategory = await this.subCategoryRepository.findOne({
       where: { id },
