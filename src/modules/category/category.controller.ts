@@ -1,18 +1,22 @@
 import { Body, Controller, Get, Param, Patch, Post, Req } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { Roles } from 'src/commons/decorators/roles.decorator';
-import { Role } from 'src/commons/enums/role.enum';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { Public } from 'src/commons/decorators/public.decorator';
 
-@Roles(Role.ADMIN)
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
+  @Public()
+  @Get('findAll')
+  findAll() {
+    return this.categoryService.findAll();
+  }
+
   @Get('/:page')
   get(@Param('page') page: number) {
-    return this.categoryService.findAll(page);
+    return this.categoryService.findByPage(page);
   }
 
   @Post('create')
@@ -40,11 +44,16 @@ export class CategoryController {
 
   @Patch('soft-delete/:categoryId')
   softDelete(@Req() req, @Param('categoryId') id: string) {
-    return this.categoryService.updateDeleteStatus(id, req.user.id, true);
+    return this.categoryService.softDelete(id, req.user.id);
   }
 
-  @Patch('restore/:categoryId')
+  @Patch('disable/:categoryId')
+  disable(@Req() req, @Param('categoryId') id: string) {
+    return this.categoryService.updateStatus(id, req.user.id, false);
+  }
+
+  @Patch('restore-status/:categoryId')
   restore(@Req() req, @Param('categoryId') id: string) {
-    return this.categoryService.updateDeleteStatus(id, req.user.id, false);
+    return this.categoryService.updateStatus(id, req.user.id, true);
   }
 }
