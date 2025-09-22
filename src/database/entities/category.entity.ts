@@ -13,6 +13,6 @@ export class CategoryEntity extends AbstractEntity {
   @OneToMany(() => SubCategoryEntity, (subCategory) => subCategory.category)
   subCategory: SubCategoryEntity[];
 
-  @Column({ type: 'boolean', name: 'is_deleted', default: false })
-  isDeleted: boolean;
+  @Column({ type: 'boolean', name: 'status', default: true })
+  status: boolean;
 }

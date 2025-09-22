@@ -1,4 +1,4 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Param, Render } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Public } from './commons/decorators/public.decorator';
 
@@ -41,5 +41,11 @@ export class AppController {
   @Render('change-password')
   changePassword() {
     return { title: 'Change password' };
+  }
+
+  @Get('product-page/:subCategoryName')
+  @Render('product')
+  product(@Param('subCategoryName') subCategoryName: string) {
+    return { title: 'Product', subCategoryName };
   }
 }

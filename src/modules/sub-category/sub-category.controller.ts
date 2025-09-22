@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Patch, Post, Req } from '@nestjs/common';
 import { SubCategoryService } from './sub-category.service';
 import { CreateSubCategoryDto } from './dto/sub-category.dto';
 import { UpdateSubCategoryDto } from './dto/update-sub-category.dto';
+import { Public } from 'src/commons/decorators/public.decorator';
 
 @Controller('sub-category')
 export class SubCategoryController {
@@ -12,6 +13,13 @@ export class SubCategoryController {
     return this.subCategoryService.findAll();
   }
 
+  @Public()
+  @Get('find-by-name/:subCategoryName')
+  findByName(@Param('subCategoryName') subCategoryName: string) {
+    return this.subCategoryService.findByName(subCategoryName);
+  }
+
+  @Public()
   @Get('find-by-category/:categoryId')
   findByCategory(@Param('categoryId') categoryId: string) {
     return this.subCategoryService.findByCategoryId(categoryId);

@@ -18,14 +18,22 @@ export class CategoryService {
     private categoryRepository: Repository<CategoryEntity>,
   ) {}
 
-  async findAll(
+  async findAll(): Promise<CategoryInterface[]> {
+    return await this.categoryRepository.find({
+      order: {
+        createdAt: 'ASC',
+      },
+    });
+  }
+
+  async findByPage(
     page: number,
   ): Promise<{ data: CategoryInterface[]; total: number; totalPages: number }> {
     const [data, total] = await this.categoryRepository.findAndCount({
       skip: (page - 1) * PAGE_SIZE,
       take: PAGE_SIZE,
       order: {
-        isDeleted: 'ASC',
+        status: 'DESC',
         createdAt: 'ASC',
       },
     });
@@ -79,10 +87,27 @@ export class CategoryService {
     }
   }
 
-  async updateDeleteStatus(
+  async softDelete(id: string, userId: string): Promise<CategoryInterface> {
+    try {
+      const categoryById = await this.findById(id);
+      if (!categoryById) {
+        throw new NotFoundException(`No have category with id = ${id}`);
+      }
+
+      return await this.categoryRepository.save({
+        id,
+        updatedBy: userId,
+        deletedAt: new Date(),
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateStatus(
     id: string,
     userId: string,
-    isDeleted: boolean,
+    status: boolean,
   ): Promise<CategoryInterface> {
     try {
       const categoryById = await this.findById(id);
@@ -92,7 +117,7 @@ export class CategoryService {
 
       return await this.categoryRepository.save({
         id,
-        isDeleted: isDeleted,
+        status,
         updatedBy: userId,
       });
     } catch (error) {
