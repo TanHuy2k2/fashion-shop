@@ -33,6 +33,7 @@
     "@types/multer": "^2.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
+    "css-color-names": "^1.0.1",
     "express-handlebars": "^8.0.1",
     "hbs": "^4.2.0",
     "ioredis": "^5.7.0",

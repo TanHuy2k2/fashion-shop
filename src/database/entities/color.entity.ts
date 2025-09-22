@@ -5,7 +5,7 @@ import { ProductItemEntity } from './product-item.entity';
 @Entity({ name: 'colors' })
 export class ColorEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   name: string;
