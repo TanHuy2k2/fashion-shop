@@ -9,7 +9,7 @@ import {
 import { AbstractEntity } from './abstract.entity';
 import { BrandEntity } from './brand.entity';
 import { SubCategoryEntity } from './sub-category.entity';
-import { ProductItemEntity } from './product-item.entity';
+import { ProductDetailEntity } from './product-detail.entity';
 import { ReviewEntity } from './review.entity';
 
 @Entity({ name: 'products' })
@@ -35,8 +35,11 @@ export class ProductEntity extends AbstractEntity {
   @JoinColumn({ name: 'sub_category_id' })
   subCategory: SubCategoryEntity;
 
-  @OneToMany(() => ProductItemEntity, (productItem) => productItem.product)
-  productItem: ProductItemEntity[];
+  @OneToMany(
+    () => ProductDetailEntity,
+    (productDetail) => productDetail.product,
+  )
+  productItem: ProductDetailEntity[];
 
   @OneToMany(() => ReviewEntity, (review) => review.product)
   review: ReviewEntity[];

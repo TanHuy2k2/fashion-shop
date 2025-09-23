@@ -12,7 +12,7 @@ import { ProductEntity } from './product.entity';
 @Entity({ name: 'reviews' })
 export class ReviewEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   comment: string;

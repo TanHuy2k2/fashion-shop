@@ -17,7 +17,7 @@ import { OrderDetailEntity } from './order-detail.entity';
 @Entity({ name: 'orders' })
 export class OrderEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @ManyToOne(() => UserEntity, (user) => user.order, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
