@@ -7,12 +7,12 @@ import {
 } from 'typeorm';
 import { AbstractEntity } from './abstract.entity';
 import { OrderEntity } from './order.entity';
-import { ProductItemEntity } from './product-item.entity';
+import { ProductDetailEntity } from './product-detail.entity';
 
-@Entity({ name: 'order_detial' })
+@Entity({ name: 'order_detail' })
 export class OrderDetailEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @ManyToOne(() => OrderEntity, (order) => order.orderDetail, {
     onDelete: 'CASCADE',
@@ -21,12 +21,12 @@ export class OrderDetailEntity extends AbstractEntity {
   order: OrderEntity;
 
   @ManyToOne(
-    () => ProductItemEntity,
-    (productItem) => productItem.orderDetail,
+    () => ProductDetailEntity,
+    (productDetail) => productDetail.orderDetail,
     { onDelete: 'CASCADE' },
   )
-  @JoinColumn({ name: 'product_item_id' })
-  productItem: ProductItemEntity;
+  @JoinColumn({ name: 'product_detail_id' })
+  productItem: ProductDetailEntity;
 
   @Column({ name: 'unit_price' })
   unitPrice: number;

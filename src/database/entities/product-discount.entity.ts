@@ -1,20 +1,20 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { AbstractEntity } from './abstract.entity';
-import { ProductItemEntity } from './product-item.entity';
+import { ProductDetailEntity } from './product-detail.entity';
 import { DiscountEntity } from './discount.entity';
 
 @Entity({ name: 'product_discount' })
 export class ProductDisountEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @ManyToOne(
-    () => ProductItemEntity,
+    () => ProductDetailEntity,
     (productItem) => productItem.productDiscount,
     { onDelete: 'CASCADE' },
   )
-  @JoinColumn({ name: 'product_item_id' })
-  productItem: ProductItemEntity;
+  @JoinColumn({ name: 'product_detail_id' })
+  productItem: ProductDetailEntity;
 
   @ManyToOne(() => DiscountEntity, (discount) => discount.productDiscount, {
     onDelete: 'CASCADE',

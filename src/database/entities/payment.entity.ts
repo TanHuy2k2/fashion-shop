@@ -13,7 +13,7 @@ import { PaymentMethod } from '../../commons/enums/payment-method.enum';
 @Entity({ name: 'payments' })
 export class PaymentEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @OneToOne(() => OrderEntity, (order) => order.payment, {
     onDelete: 'CASCADE',

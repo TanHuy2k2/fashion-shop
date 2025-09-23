@@ -8,15 +8,14 @@ import {
 } from 'typeorm';
 import { AbstractEntity } from './abstract.entity';
 import { ProductEntity } from './product.entity';
-import { SizeEntity } from './size.entity';
 import { ColorEntity } from './color.entity';
 import { ProductDisountEntity } from './product-discount.entity';
 import { OrderDetailEntity } from './order-detail.entity';
 
-@Entity({ name: 'product_item' })
-export class ProductItemEntity extends AbstractEntity {
+@Entity({ name: 'product_detail' })
+export class ProductDetailEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @ManyToOne(() => ProductEntity, (product) => product.productItem, {
     onDelete: 'CASCADE',
@@ -24,9 +23,8 @@ export class ProductItemEntity extends AbstractEntity {
   @JoinColumn({ name: 'product_id' })
   product: ProductEntity;
 
-  @ManyToOne(() => SizeEntity, (size) => size, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'size_id' })
-  size: SizeEntity;
+  @Column()
+  size: string;
 
   @ManyToOne(() => ColorEntity, (color) => color, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'color_id' })

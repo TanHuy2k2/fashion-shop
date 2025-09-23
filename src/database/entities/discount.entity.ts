@@ -6,7 +6,7 @@ import { ProductDisountEntity } from './product-discount.entity';
 @Entity({ name: 'discounts' })
 export class DiscountEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   name: string;

@@ -12,7 +12,7 @@ import { OrderEntity } from './order.entity';
 @Entity({ name: 'shipping' })
 export class ShippingEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @ManyToOne(() => OrderEntity, (order) => order.shipping, {
     onDelete: 'CASCADE',
