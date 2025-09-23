@@ -42,6 +42,16 @@ export class ProductService {
     };
   }
 
+  async findOneByName(productName: string): Promise<ProductInterface | null> {
+    const product = await this.productRepository.findOne({
+      where: { name: productName },
+      relations: ['brand', 'subCategory', 'subCategory.category'],
+    });
+    if (product) return ProductMapper.toResponse(product);
+
+    return null;
+  }
+
   async findByName(productName: string): Promise<ProductInterface[] | null> {
     const product = await this.productRepository.find({
       where: { name: productName },
