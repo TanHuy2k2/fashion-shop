@@ -39,7 +39,7 @@ export class ProductEntity extends AbstractEntity {
     () => ProductDetailEntity,
     (productDetail) => productDetail.product,
   )
-  productItem: ProductDetailEntity[];
+  productDetail: ProductDetailEntity[];
 
   @OneToMany(() => ReviewEntity, (review) => review.product)
   review: ReviewEntity[];

@@ -99,6 +99,9 @@ export class ProductDetailService {
       if (productDetail) {
         const stock = data.stock + productDetail.stock;
         return await this.update(productDetail.id, {
+          color: checkColor,
+          image: data.image,
+          size: data.size,
           stock,
           price: data.price,
           updatedBy,

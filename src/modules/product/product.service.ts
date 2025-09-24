@@ -45,7 +45,13 @@ export class ProductService {
   async findOneByName(productName: string): Promise<ProductInterface | null> {
     const product = await this.productRepository.findOne({
       where: { name: productName },
-      relations: ['brand', 'subCategory', 'subCategory.category'],
+      relations: [
+        'brand',
+        'subCategory',
+        'subCategory.category',
+        'productDetail',
+        'productDetail.color',
+      ],
     });
     if (product) return ProductMapper.toResponse(product);
 
@@ -73,13 +79,31 @@ export class ProductService {
   ): Promise<ProductInterface[] | null> {
     const product = await this.productRepository.find({
       where: { subCategory: { id: subCategoryId } },
-      relations: ['brand', 'subCategory', 'subCategory.category'],
+      relations: [
+        'brand',
+        'subCategory',
+        'subCategory.category',
+        'productDetail',
+        'productDetail.color',
+      ],
     });
     return product.map((data) => ProductMapper.toResponse(data));
   }
 
   async findById(id: string): Promise<ProductInterface | null> {
-    return await this.productRepository.findOneBy({ id });
+   const product = await this.productRepository.findOne({
+      where: { id },
+      relations: [
+        'brand',
+        'subCategory',
+        'subCategory.category',
+        'productDetail',
+        'productDetail.color',
+      ],
+    });
+    if (product) return ProductMapper.toResponse(product);
+
+    return null;
   }
 
   async findDuplicate(

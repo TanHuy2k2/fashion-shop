@@ -48,4 +48,10 @@ export class AppController {
   product(@Param('subCategoryName') subCategoryName: string) {
     return { title: 'Product', subCategoryName };
   }
+
+  @Get('detail-product-page/:productName')
+  @Render('detail-product')
+  detailProduct(@Param('productName') productName: string) {
+    return { title: 'Detail-Product', productName };
+  }
 }
