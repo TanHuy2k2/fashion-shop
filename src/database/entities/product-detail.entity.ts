@@ -17,7 +17,7 @@ export class ProductDetailEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => ProductEntity, (product) => product.productItem, {
+  @ManyToOne(() => ProductEntity, (product) => product.productDetail, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'product_id' })

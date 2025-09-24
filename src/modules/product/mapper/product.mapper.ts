@@ -18,6 +18,18 @@ export class ProductMapper {
           name: product.subCategory.category.name,
         },
       },
+      productDetail:
+        product.productDetail?.map((detail) => ({
+          id: detail.id,
+          size: detail.size,
+          color: {
+            name: detail.color.name,
+            hexCode: detail.color.hexCode,
+          },
+          image: detail.image,
+          price: detail.price,
+          stock: detail.stock,
+        })) ?? [],
     };
   }
 }
