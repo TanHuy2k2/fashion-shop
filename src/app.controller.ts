@@ -54,4 +54,10 @@ export class AppController {
   detailProduct(@Param('productName') productName: string) {
     return { title: 'Detail-Product', productName };
   }
+
+  @Get('cart-page')
+  @Render('cart')
+  cart() {
+    return { title: 'Cart' };
+  }
 }

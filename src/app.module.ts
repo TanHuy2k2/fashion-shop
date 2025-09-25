@@ -16,6 +16,7 @@ import { SubCategoryModule } from './modules/sub-category/sub-category.module';
 import { ProductModule } from './modules/product/product.module';
 import { ColorModule } from './modules/color/color.module';
 import { ProductDetailModule } from './modules/product-detail/product-detail.module';
+import { CartModule } from './modules/cart/cart.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ProductDetailModule } from './modules/product-detail/product-detail.mod
     ProductModule,
     ColorModule,
     ProductDetailModule,
+    CartModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
