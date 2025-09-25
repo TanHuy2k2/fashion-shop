@@ -36,19 +36,13 @@ export class ProductDetailService {
   }
 
   async findById(productDetailId: string) {
-    const productDetail = await this.productDetailRepository.findOne({
+    return await this.productDetailRepository.findOne({
       where: { id: productDetailId },
       relations: [
         'product',
-        'product.subCategory',
-        'product.subCategory.category',
-        'product.brand',
         'color',
       ],
     });
-    if (productDetail) return ProductDetailMapper.toResponse(productDetail);
-
-    return null;
   }
 
   async findDuplicate(

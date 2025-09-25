@@ -14,6 +14,7 @@ import { CreateProductDetailDto } from './dto/create-product-detail.dto';
 import { UploadImageInterceptor } from 'src/commons/interceptors/upload-image.interceptor';
 import { downloadImage } from 'src/utils/downloadImage';
 import { UpdateProductDetailDto } from './dto/update-product-detail.dto';
+import { Public } from 'src/commons/decorators/public.decorator';
 
 @Controller('product-detail')
 export class ProductDetailController {
@@ -22,6 +23,12 @@ export class ProductDetailController {
   @Get('/:productId')
   get(@Param('productId') productId: string) {
     return this.productDetailService.findByProductId(productId);
+  }
+
+  @Public()
+  @Get('find-by-id/:productDetailId')
+  findById(@Param('productDetailId') productDetailId: string) {
+    return this.productDetailService.findById(productDetailId);
   }
 
   @UseInterceptors(UploadImageInterceptor('image'))
