@@ -38,4 +38,11 @@ export class AdminController {
   product() {
     return { isProducts: true, layout: 'admin-layout', title: 'Product' };
   }
+
+  @Public()
+  @Get('orders')
+  @Render('admin/order-page')
+  order() {
+    return { isOrders: true, layout: 'admin-layout', title: 'Order' };
+  }
 }

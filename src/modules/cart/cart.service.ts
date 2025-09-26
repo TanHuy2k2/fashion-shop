@@ -17,7 +17,9 @@ export class CartService {
 
   async addItem(cartId: string, data: CartDto) {
     const cart = await this.getCart(cartId);
-    const existing = cart.find((item) => item.productDetailId === data.productDetailId);
+    const existing = cart.find(
+      (item) => item.productDetailId === data.productDetailId,
+    );
     if (existing) {
       existing.quantity += data.quantity;
     } else {
@@ -40,5 +42,9 @@ export class CartService {
     cart = cart.filter((i) => i.productDetailId !== productDetailId);
 
     return await this.redis.set(this.getCartKey(cartId), JSON.stringify(cart));
+  }
+
+  async delete(cartId: string) {
+    return await this.redis.del(cartId);
   }
 }
