@@ -26,7 +26,7 @@ export class OrderDetailEntity extends AbstractEntity {
     { onDelete: 'CASCADE' },
   )
   @JoinColumn({ name: 'product_detail_id' })
-  productItem: ProductDetailEntity;
+  productDetail: ProductDetailEntity;
 
   @Column({ name: 'unit_price' })
   unitPrice: number;

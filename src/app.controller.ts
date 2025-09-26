@@ -79,9 +79,9 @@ export class AppController {
     return { title: 'Order' };
   }
 
-  @Get('order-detail-page')
+  @Get('order-detail-page/:orderId')
   @Render('order-detail')
-  orderDetail() {
-    return { title: 'Order-Detail' };
+  orderDetail(@Param('orderId') orderId :string) {
+    return { title: 'Order-Detail', orderId };
   }
 }

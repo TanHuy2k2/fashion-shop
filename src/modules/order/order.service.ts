@@ -6,6 +6,7 @@ import { OrderDto } from './dto/order.dto';
 import { OrderInterface } from './interface/order.interface';
 import { Status } from 'src/commons/enums/status.enum';
 import { PAGE_SIZE } from 'src/constants/constant';
+import { OrderMapper } from './mapper/order.mapper';
 
 @Injectable()
 export class OrderService {
@@ -33,7 +34,12 @@ export class OrderService {
   }
 
   async findOne(id: string): Promise<OrderInterface | null> {
-    return await this.orderRepository.findOne({ where: { id } });
+    const order = await this.orderRepository.findOne({
+      where: { id },
+      relations: ['orderDetail', 'orderDetail.productDetail', 'orderDetail.productDetail.product'],
+    });
+
+    return OrderMapper.toResponse(order);
   }
 
   async create(data: OrderDto): Promise<OrderInterface> {
