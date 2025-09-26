@@ -19,9 +19,19 @@ export class OrderEntity extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.order, { onDelete: 'CASCADE' })
+  @ManyToOne(() => UserEntity, (user) => user.order, {
+    onDelete: 'CASCADE',
+    nullable: true,
+    eager: true,
+  })
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
+
+  @Column({ name: 'guest_name', type: 'varchar', length: 255, nullable: true })
+  guestName: string | null;
+
+  @Column({ name: 'guest_phone', type: 'varchar', length: 20, nullable: true })
+  guestPhone: string | null;
 
   @Column({ name: 'discount_amount' })
   discountAmount: number;

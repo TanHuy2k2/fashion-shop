@@ -60,4 +60,28 @@ export class AppController {
   cart() {
     return { title: 'Cart' };
   }
+
+  @Get('shipping-page')
+  @Render('shipping')
+  shipping() {
+    return { title: 'Shipping' };
+  }
+
+  @Get('payment-page')
+  @Render('payment')
+  payment() {
+    return { title: 'Payment' };
+  }
+
+  @Get('order-page')
+  @Render('order')
+  order() {
+    return { title: 'Order' };
+  }
+
+  @Get('order-detail-page')
+  @Render('order-detail')
+  orderDetail() {
+    return { title: 'Order-Detail' };
+  }
 }
