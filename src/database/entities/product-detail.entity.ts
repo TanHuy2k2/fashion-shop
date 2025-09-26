@@ -45,6 +45,6 @@ export class ProductDetailEntity extends AbstractEntity {
   )
   productDiscount: ProductDisountEntity[];
 
-  @OneToMany(() => OrderDetailEntity, (orderDetail) => orderDetail.productItem)
+  @OneToMany(() => OrderDetailEntity, (orderDetail) => orderDetail.productDetail)
   orderDetail: OrderDetailEntity[];
 }

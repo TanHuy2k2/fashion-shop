@@ -18,6 +18,7 @@ import { ColorModule } from './modules/color/color.module';
 import { ProductDetailModule } from './modules/product-detail/product-detail.module';
 import { CartModule } from './modules/cart/cart.module';
 import { OrderModule } from './modules/order/order.module';
+import { OrderDetailModule } from './modules/order-detail/order-detail.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { OrderModule } from './modules/order/order.module';
     ProductDetailModule,
     CartModule,
     OrderModule,
+    OrderDetailModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
