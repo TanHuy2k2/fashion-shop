@@ -63,11 +63,13 @@ export class UserController {
     });
   }
 
+  @Public()
   @Post('send-mail')
   sendMail(@Body('email') email: string) {
     return this.userService.sendMail(email);
   }
 
+  @Public()
   @Post('change-password')
   changePassword(@Body() data: ChangePasswordDto) {
     return this.userService.changePassword(data);

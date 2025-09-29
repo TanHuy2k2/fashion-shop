@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductDetailEntity } from 'src/database/entities/product-detail.entity';
@@ -38,10 +42,7 @@ export class ProductDetailService {
   async findById(productDetailId: string) {
     return await this.productDetailRepository.findOne({
       where: { id: productDetailId },
-      relations: [
-        'product',
-        'color',
-      ],
+      relations: ['product', 'color'],
     });
   }
 
@@ -117,15 +118,44 @@ export class ProductDetailService {
     data: UpdateProductDetailDto,
   ): Promise<ProductDetailInterface> {
     try {
+      const { color } = data;
       const productDetailById = await this.findById(id);
       if (!productDetailById) {
         throw new NotFoundException(`No have product detail with id = ${id}`);
       }
 
-      return await this.productDetailRepository.save({ id, ...data });
+      let checkColor: any = await this.colorService.findByName(color.name);
+      if (!checkColor) {
+        checkColor = await this.colorService.create({
+          ...color,
+        });
+      }
+
+      return await this.productDetailRepository.save({
+        id,
+        ...data,
+        color: checkColor,
+      });
     } catch (error) {
       throw error;
     }
+  }
+
+  async decreaseStock(
+    id: string,
+    quantity: number,
+  ): Promise<ProductDetailEntity> {
+    const productDetail = await this.findById(id);
+    if (!productDetail) {
+      throw new NotFoundException('Product detail not found');
+    }
+
+    if (productDetail.stock < quantity) {
+      throw new BadRequestException('Not enough stock');
+    }
+
+    productDetail.stock -= quantity;
+    return await this.productDetailRepository.save(productDetail);
   }
 
   async softDelete(

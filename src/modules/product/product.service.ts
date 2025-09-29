@@ -86,12 +86,17 @@ export class ProductService {
         'productDetail',
         'productDetail.color',
       ],
+      order: {
+        productDetail: {
+          size: 'ASC',
+        },
+      },
     });
     return product.map((data) => ProductMapper.toResponse(data));
   }
 
   async findById(id: string): Promise<ProductInterface | null> {
-   const product = await this.productRepository.findOne({
+    const product = await this.productRepository.findOne({
       where: { id },
       relations: [
         'brand',
@@ -100,6 +105,11 @@ export class ProductService {
         'productDetail',
         'productDetail.color',
       ],
+      order: {
+        productDetail: {
+          size: 'ASC',
+        },
+      },
     });
     if (product) return ProductMapper.toResponse(product);
 
