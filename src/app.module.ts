@@ -19,6 +19,8 @@ import { ProductDetailModule } from './modules/product-detail/product-detail.mod
 import { CartModule } from './modules/cart/cart.module';
 import { OrderModule } from './modules/order/order.module';
 import { OrderDetailModule } from './modules/order-detail/order-detail.module';
+import { ShippingModule } from './modules/shipping/shipping.module';
+import { PaymentModule } from './modules/payment/payment.module';
 
 @Module({
   imports: [
@@ -33,6 +35,8 @@ import { OrderDetailModule } from './modules/order-detail/order-detail.module';
     CartModule,
     OrderModule,
     OrderDetailModule,
+    ShippingModule,
+    PaymentModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

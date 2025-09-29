@@ -21,7 +21,7 @@ export class ShippingEntity extends AbstractEntity {
   order: OrderEntity;
 
   @Column({ name: 'shipping_address' })
-  shippingAdress: string;
+  shippingAddress: string;
 
   @Column({ name: 'shipping_method' })
   shippingMethod: string;

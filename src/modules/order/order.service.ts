@@ -36,7 +36,13 @@ export class OrderService {
   async findOne(id: string): Promise<OrderInterface | null> {
     const order = await this.orderRepository.findOne({
       where: { id },
-      relations: ['orderDetail', 'orderDetail.productDetail', 'orderDetail.productDetail.product'],
+      relations: [
+        'orderDetail',
+        'orderDetail.productDetail',
+        'orderDetail.productDetail.product',
+        'payment',
+        'shipping',
+      ],
     });
 
     return OrderMapper.toResponse(order);
