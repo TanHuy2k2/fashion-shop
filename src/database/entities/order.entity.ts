@@ -45,7 +45,7 @@ export class OrderEntity extends AbstractEntity {
   @OneToMany(() => ShippingEntity, (shipping) => shipping.order)
   shipping: ShippingEntity[];
 
-  @OneToOne(() => ShippingEntity, (shipping) => shipping.order)
+  @OneToOne(() => PaymentEntity, (payment) => payment.order)
   payment: PaymentEntity;
 
   @OneToMany(() => OrderDetailEntity, (orderDetail) => orderDetail.order)

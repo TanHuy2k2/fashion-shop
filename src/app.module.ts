@@ -21,6 +21,8 @@ import { OrderModule } from './modules/order/order.module';
 import { OrderDetailModule } from './modules/order-detail/order-detail.module';
 import { ShippingModule } from './modules/shipping/shipping.module';
 import { PaymentModule } from './modules/payment/payment.module';
+import { MomoModule } from './modules/momo/momo.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -37,6 +39,8 @@ import { PaymentModule } from './modules/payment/payment.module';
     OrderDetailModule,
     ShippingModule,
     PaymentModule,
+    MomoModule,
+    DashboardModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
