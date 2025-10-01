@@ -45,4 +45,11 @@ export class AdminController {
   order() {
     return { isOrders: true, layout: 'admin-layout', title: 'Order' };
   }
+
+  @Public()
+  @Get('chats')
+  @Render('admin/chat-page')
+  chat() {
+    return { isChats: true, layout: 'admin-layout', title: 'Chat' };
+  }
 }
