@@ -23,6 +23,7 @@ import { ShippingModule } from './modules/shipping/shipping.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { MomoModule } from './modules/momo/momo.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
     PaymentModule,
     MomoModule,
     DashboardModule,
+    ChatModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
