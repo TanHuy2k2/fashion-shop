@@ -24,6 +24,7 @@ import { PaymentModule } from './modules/payment/payment.module';
 import { MomoModule } from './modules/momo/momo.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ChatModule } from './modules/chat/chat.module';
+import { ReviewModule } from './modules/review/review.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { ChatModule } from './modules/chat/chat.module';
     MomoModule,
     DashboardModule,
     ChatModule,
+    ReviewModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

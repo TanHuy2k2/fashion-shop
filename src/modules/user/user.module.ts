@@ -14,5 +14,6 @@ import { RedisModule } from '../redis/redis.module';
   ],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}
