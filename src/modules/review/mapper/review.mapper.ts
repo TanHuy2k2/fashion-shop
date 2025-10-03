@@ -12,8 +12,8 @@ export class ReviewMapper {
         id: review.product.id,
         name: review.product.name,
       },
-      createAt: review.createAt,
-      updateAt: review.updateAt,
+      createdAt: review.createdAt,
+      updatedAt: review.updatedAt,
     };
   }
 }

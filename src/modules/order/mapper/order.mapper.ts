@@ -28,4 +28,26 @@ export class OrderMapper {
       })),
     };
   }
+
+  static toUser(order: any) {
+    return {
+      id: order.id,
+      finalAmount: order.finalAmount,
+      status: order.status,
+      orderDetails: order.orderDetail?.map((detail: any) => ({
+        id: detail.id,
+        productId: detail.productDetail.id,
+        productName: detail.productDetail.product.name,
+        image: detail.productDetail.image,
+        quantity: detail.quantity,
+        review: {
+          id: detail.productDetail?.product?.review?.[0]?.id || null,
+        }
+      })),
+      shipping: order.shipping?.map((shipping: any) => ({
+        id: shipping.id,
+        status: shipping.status,
+      })),
+    };
+  }
 }

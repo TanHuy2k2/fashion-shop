@@ -11,6 +11,7 @@ import {
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
+import { Public } from 'src/commons/decorators/public.decorator';
 
 @Controller('review')
 export class ReviewController {
@@ -26,6 +27,7 @@ export class ReviewController {
     });
   }
 
+  @Public()
   @Get('product/:id')
   findByProduct(@Param('id') id: string) {
     return this.reviewService.findByProduct(id);
