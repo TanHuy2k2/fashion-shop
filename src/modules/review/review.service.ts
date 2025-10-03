@@ -40,7 +40,7 @@ export class ReviewService {
       where: { product: { id: productId } },
       relations: ['user', 'product'],
       order: {
-        createdAt: 'ASC',
+        createdAt: 'DESC',
       },
     });
 

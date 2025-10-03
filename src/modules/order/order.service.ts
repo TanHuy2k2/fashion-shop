@@ -33,6 +33,21 @@ export class OrderService {
     };
   }
 
+  async findByUserId(userId: string){
+    const orders = await this.orderRepository.find({
+      where: { user: {id: userId} },
+      relations: [
+        'user',
+        'orderDetail',
+        'orderDetail.productDetail',
+        'orderDetail.productDetail.product',
+        'orderDetail.productDetail.product.review',
+      ],
+    });
+
+    return orders.map((order)=>OrderMapper.toUser(order));
+  }
+
   async findOne(id: string): Promise<OrderInterface | null> {
     const order = await this.orderRepository.findOne({
       where: { id },
@@ -43,6 +58,9 @@ export class OrderService {
         'payment',
         'shipping',
       ],
+      order: {
+        createdAt: 'DESC',
+      }
     });
 
     return OrderMapper.toResponse(order);
