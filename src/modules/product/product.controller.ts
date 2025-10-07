@@ -1,7 +1,17 @@
-import { Body, Controller, Get, Param, Patch, Post, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductDto } from './dto/product.dto';
 import { Public } from 'src/commons/decorators/public.decorator';
+import { SortBy } from 'src/commons/enums/sort-by.enum';
 
 @Controller('product')
 export class ProductController {
@@ -30,9 +40,23 @@ export class ProductController {
   }
 
   @Public()
-  @Get('find-by-sub-category/:subCategoryId')
-  findBySubCategory(@Param('subCategoryId') subCategoryId: string) {
-    return this.productService.findBySubCategory(subCategoryId);
+  @Get('search/:keyword/:numberPage')
+  async search(
+    @Param('keyword') keyword: string,
+    @Param('numberPage') page: number,
+    @Query('sortBy') sortBy?: SortBy,
+  ) {
+    return this.productService.search(keyword, page, sortBy);
+  }
+
+  @Public()
+  @Get('find-by-sub-category/:subCategoryId/:numberPage')
+  async findBySubCategory(
+    @Param('subCategoryId') subCategoryId: string,
+    @Param('numberPage') page: number,
+    @Query('sortBy') sortBy?: SortBy,
+  ) {
+    return this.productService.findBySubCategory(subCategoryId, page, sortBy);
   }
 
   @Post('create')

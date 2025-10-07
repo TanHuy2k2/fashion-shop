@@ -5,13 +5,18 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from 'src/database/entities/product.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { SubCategoryService } from '../sub-category/sub-category.service';
 import { BrandService } from '../brand/brand.service';
-import { PAGE_SIZE } from 'src/constants/constant';
+import {
+  PAGE_DEFAULT,
+  PAGE_SIZE,
+  PRODUCT_PAGE_SIZE,
+} from 'src/constants/constant';
 import { ProductInterface } from './interface/product.interface';
 import { ProductMapper } from './mapper/product.mapper';
 import { ProductDto } from './dto/product.dto';
+import { SortBy } from 'src/commons/enums/sort-by.enum';
 
 @Injectable()
 export class ProductService {
@@ -74,10 +79,51 @@ export class ProductService {
     return product.map((data) => ProductMapper.toResponse(data));
   }
 
+  private readonly SORT_OPTIONS: Record<SortBy, any> = {
+    [SortBy.PRICE_ASC]: { productDetail: { price: 'ASC' } },
+    [SortBy.PRICE_DESC]: { productDetail: { price: 'DESC' } },
+  };
+
+  private getSortOrder(sortBy?: SortBy) {
+    return sortBy ? this.SORT_OPTIONS[sortBy] : { id: 'ASC' };
+  }
+
+  async search(
+    keyword: string,
+    page = PAGE_DEFAULT,
+    sortBy?: SortBy,
+  ): Promise<{ data: ProductInterface[]; total: number; totalPages: number }> {
+    if (!keyword) {
+      return { data: [], total: 0, totalPages: 0 };
+    }
+
+    const [products, total] = await this.productRepository.findAndCount({
+      where: [{ name: Like(`%${keyword}%`) }],
+      relations: [
+        'brand',
+        'subCategory',
+        'subCategory.category',
+        'productDetail',
+        'productDetail.color',
+      ],
+      skip: (page - 1) * PRODUCT_PAGE_SIZE,
+      take: PRODUCT_PAGE_SIZE,
+      order: this.getSortOrder(sortBy),
+    });
+
+    return {
+      data: products.map(ProductMapper.toResponse),
+      total,
+      totalPages: Math.ceil(total / PRODUCT_PAGE_SIZE),
+    };
+  }
+
   async findBySubCategory(
     subCategoryId: string,
-  ): Promise<ProductInterface[] | null> {
-    const product = await this.productRepository.find({
+    page = PAGE_DEFAULT,
+    sortBy?: SortBy,
+  ): Promise<{ data: ProductInterface[]; total: number; totalPages: number }> {
+    const [products, total] = await this.productRepository.findAndCount({
       where: { subCategory: { id: subCategoryId } },
       relations: [
         'brand',
@@ -86,13 +132,16 @@ export class ProductService {
         'productDetail',
         'productDetail.color',
       ],
-      order: {
-        productDetail: {
-          size: 'ASC',
-        },
-      },
+      skip: (page - 1) * PRODUCT_PAGE_SIZE,
+      take: PRODUCT_PAGE_SIZE,
+      order: this.getSortOrder(sortBy),
     });
-    return product.map((data) => ProductMapper.toResponse(data));
+
+    return {
+      data: products.map(ProductMapper.toResponse),
+      total,
+      totalPages: Math.ceil(total / PRODUCT_PAGE_SIZE),
+    };
   }
 
   async findById(id: string): Promise<ProductInterface | null> {

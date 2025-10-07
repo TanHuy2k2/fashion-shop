@@ -12,6 +12,7 @@ import { ProductService } from '../product/product.service';
 import { ColorService } from '../color/color.service';
 import { UpdateProductDetailDto } from './dto/update-product-detail.dto';
 import { ProductDetailMapper } from './mapper/product-detail.mapper';
+import * as XLSX from 'xlsx';
 
 @Injectable()
 export class ProductDetailService {
@@ -110,6 +111,41 @@ export class ProductDetailService {
       });
     } catch (error) {
       throw error;
+    }
+  }
+
+  async import(userId: string, filePath: string): Promise<void> {
+    if (!filePath) {
+      throw new NotFoundException(`No have file!`);
+    }
+
+    const workbook = XLSX.readFile(filePath);
+    const sheetName = workbook.SheetNames[0];
+    const sheet = workbook.Sheets[sheetName];
+    const rows: any[] = XLSX.utils.sheet_to_json(sheet);
+    for (const row of rows) {
+      try {
+        await this.create({
+          product: {
+            brandName: row['brand'],
+            categoryName: row['category'],
+            subCategoryName: row['sub_category'],
+            name: row['name'],
+            description: row['description'],
+            createdBy: userId,
+            updatedBy: userId,
+          },
+          color: { name: row['color'], createdBy: userId, updatedBy: userId },
+          size: row['size'],
+          price: Number(row['price']),
+          stock: Number(row['stock']),
+          image: row['image'],
+          createdBy: userId,
+          updatedBy: userId,
+        });
+      } catch (err) {
+        throw err;
+      }
     }
   }
 
