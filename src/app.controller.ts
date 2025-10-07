@@ -84,4 +84,10 @@ export class AppController {
   orderDetail(@Param('orderId') orderId :string) {
     return { title: 'Order-Detail', orderId };
   }
+
+  @Get('search-page/:searchValue')
+  @Render('search')
+  search(@Param('searchValue') searchValue :string) {
+    return { title: 'Search', searchValue };
+  }
 }

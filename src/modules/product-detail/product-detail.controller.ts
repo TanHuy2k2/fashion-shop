@@ -15,6 +15,7 @@ import { UploadImageInterceptor } from 'src/commons/interceptors/upload-image.in
 import { downloadImage } from 'src/utils/downloadImage';
 import { UpdateProductDetailDto } from './dto/update-product-detail.dto';
 import { Public } from 'src/commons/decorators/public.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('product-detail')
 export class ProductDetailController {
@@ -29,6 +30,12 @@ export class ProductDetailController {
   @Get('find-by-id/:productDetailId')
   findById(@Param('productDetailId') productDetailId: string) {
     return this.productDetailService.findById(productDetailId);
+  }
+
+  @UseInterceptors(FileInterceptor('file', { dest: './public/uploads' }))
+  @Post('import')
+  async importCsv(@Req() req, @UploadedFile() file: Express.Multer.File) {
+    return this.productDetailService.import(req.user.id, file.path);
   }
 
   @UseInterceptors(UploadImageInterceptor('image'))
