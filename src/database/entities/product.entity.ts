@@ -11,6 +11,7 @@ import { BrandEntity } from './brand.entity';
 import { SubCategoryEntity } from './sub-category.entity';
 import { ProductDetailEntity } from './product-detail.entity';
 import { ReviewEntity } from './review.entity';
+import { ProductDisountEntity } from './product-discount.entity';
 
 @Entity({ name: 'products' })
 export class ProductEntity extends AbstractEntity {
@@ -40,6 +41,12 @@ export class ProductEntity extends AbstractEntity {
     (productDetail) => productDetail.product,
   )
   productDetail: ProductDetailEntity[];
+
+  @OneToMany(
+    () => ProductDisountEntity,
+    (productDiscount) => productDiscount.product,
+  )
+  productDiscount: ProductDisountEntity[];
 
   @OneToMany(() => ReviewEntity, (review) => review.product)
   review: ReviewEntity[];

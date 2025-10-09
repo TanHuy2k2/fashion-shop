@@ -25,6 +25,7 @@ import { MomoModule } from './modules/momo/momo.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { ReviewModule } from './modules/review/review.module';
+import { DiscountModule } from './modules/discount/discount.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { ReviewModule } from './modules/review/review.module';
     DashboardModule,
     ChatModule,
     ReviewModule,
+    DiscountModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

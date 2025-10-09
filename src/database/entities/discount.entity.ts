@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { AbstractEntity } from './abstract.entity';
-import { Scope } from '../../commons/enums/scope.enum';
+import { DiscountScope } from '../../commons/enums/discount-scope.enum';
 import { ProductDisountEntity } from './product-discount.entity';
 
 @Entity({ name: 'discounts' })
@@ -20,8 +20,8 @@ export class DiscountEntity extends AbstractEntity {
   @Column({ name: 'end_date' })
   endDate: Date;
 
-  @Column({ type: 'enum', enum: Scope })
-  scope: Scope;
+  @Column({ type: 'enum', enum: DiscountScope })
+  scope: DiscountScope;
 
   @OneToMany(
     () => ProductDisountEntity,
