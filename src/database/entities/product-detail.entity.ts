@@ -9,7 +9,6 @@ import {
 import { AbstractEntity } from './abstract.entity';
 import { ProductEntity } from './product.entity';
 import { ColorEntity } from './color.entity';
-import { ProductDisountEntity } from './product-discount.entity';
 import { OrderDetailEntity } from './order-detail.entity';
 
 @Entity({ name: 'product_detail' })
@@ -40,11 +39,8 @@ export class ProductDetailEntity extends AbstractEntity {
   stock: number;
 
   @OneToMany(
-    () => ProductDisountEntity,
-    (productDiscount) => productDiscount.productItem,
+    () => OrderDetailEntity,
+    (orderDetail) => orderDetail.productDetail,
   )
-  productDiscount: ProductDisountEntity[];
-
-  @OneToMany(() => OrderDetailEntity, (orderDetail) => orderDetail.productDetail)
   orderDetail: OrderDetailEntity[];
 }

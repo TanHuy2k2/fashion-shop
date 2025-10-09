@@ -1,4 +1,4 @@
-export enum Scope {
+export enum DiscountScope {
   ALL = 'all',
   PRODUCT = 'product',
 }
