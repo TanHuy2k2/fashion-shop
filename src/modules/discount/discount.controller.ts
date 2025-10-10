@@ -11,16 +11,18 @@ import {
 import { DiscountService } from './discount.service';
 import { CreateDiscountDto } from './dto/create-discount.dto';
 import { UpdateDiscountDto } from './dto/update-discount.dto';
+import { Public } from 'src/commons/decorators/public.decorator';
 
 @Controller('discount')
 export class DiscountController {
   constructor(private readonly discountService: DiscountService) {}
 
-  @Get()
-  get() {
-    return this.discountService.getAll();
+  @Get('get/:page')
+  get(@Param('page') page: number) {
+    return this.discountService.getByPage(page);
   }
 
+  @Public()
   @Get('/:date')
   getActiveDiscount(@Param('date') dateString: string) {
     return this.discountService.getActiveDiscount(new Date(dateString));

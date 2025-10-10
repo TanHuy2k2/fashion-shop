@@ -47,6 +47,13 @@ export class AdminController {
   }
 
   @Public()
+  @Get('discounts')
+  @Render('admin/discount-page')
+  discount() {
+    return { isDiscounts: true, layout: 'admin-layout', title: 'Discount' };
+  }
+
+  @Public()
   @Get('chats')
   @Render('admin/chat-page')
   chat() {

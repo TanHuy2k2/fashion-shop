@@ -30,6 +30,13 @@ export class ProductMapper {
           price: detail.price,
           stock: detail.stock,
         })) ?? [],
+      productDiscount:
+        product.productDiscount?.map((productDiscount) => ({
+          name: productDiscount.discount.name,
+          percent: productDiscount.discount.percent,
+          startDate: productDiscount.discount.startDate,
+          endDate: productDiscount.discount.endDate,
+        })) ?? [],
     };
   }
 }

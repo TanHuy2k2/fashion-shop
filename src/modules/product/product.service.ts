@@ -105,6 +105,8 @@ export class ProductService {
         'subCategory.category',
         'productDetail',
         'productDetail.color',
+        'productDiscount',
+        'productDiscount.discount',
       ],
       skip: (page - 1) * PRODUCT_PAGE_SIZE,
       take: PRODUCT_PAGE_SIZE,
@@ -131,6 +133,8 @@ export class ProductService {
         'subCategory.category',
         'productDetail',
         'productDetail.color',
+        'productDiscount',
+        'productDiscount.discount',
       ],
       skip: (page - 1) * PRODUCT_PAGE_SIZE,
       take: PRODUCT_PAGE_SIZE,
@@ -153,6 +157,8 @@ export class ProductService {
         'subCategory.category',
         'productDetail',
         'productDetail.color',
+        'productDiscount',
+        'productDiscount.discount',
       ],
       order: {
         productDetail: {

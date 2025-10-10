@@ -9,6 +9,7 @@ import { LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
 import { DiscountInterface } from './interface/discount.interface';
 import { CreateDiscountDto } from './dto/create-discount.dto';
 import { UpdateDiscountDto } from './dto/update-discount.dto';
+import { PAGE_DEFAULT, PAGE_SIZE } from 'src/constants/constant';
 
 @Injectable()
 export class DiscountService {
@@ -17,8 +18,22 @@ export class DiscountService {
     private discountRepository: Repository<DiscountEntity>,
   ) {}
 
-  async getAll(): Promise<DiscountInterface[]> {
-    return await this.discountRepository.find();
+  async getByPage(
+    page = PAGE_DEFAULT,
+  ): Promise<{ data: DiscountInterface[]; total: number; totalPages: number }> {
+    const [data, total] = await this.discountRepository.findAndCount({
+      skip: (page - 1) * PAGE_SIZE,
+      take: PAGE_SIZE,
+      order: {
+        createdAt: 'ASC',
+      },
+    });
+
+    return {
+      data,
+      total,
+      totalPages: Math.ceil(total / PAGE_SIZE),
+    };
   }
 
   async getActiveDiscount(date: Date): Promise<DiscountInterface[]> {
