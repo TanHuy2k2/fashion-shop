@@ -26,6 +26,13 @@ export class ProductDiscountService {
     return await this.productDiscountRepository.findOneBy({ id });
   }
 
+  async findByDiscountId(discountId: string) {
+    return await this.productDiscountRepository.find({
+      where: { discount: { id: discountId } },
+      relations: ['product'],
+    });
+  }
+
   async findDuplicate(productId: string, discountId: string) {
     return await this.productDiscountRepository.findOneBy({
       product: { id: productId },
@@ -107,5 +114,16 @@ export class ProductDiscountService {
     } catch (error) {
       throw error;
     }
+  }
+
+  async delete(discountId: string) {
+    const discount = await this.discountService.findById(discountId);
+    if (!discount) {
+      throw new NotFoundException('Can not find this discount!');
+    }
+
+    return this.productDiscountRepository.delete({
+      discount: { id: discountId },
+    });
   }
 }

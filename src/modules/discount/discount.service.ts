@@ -77,7 +77,7 @@ export class DiscountService {
       }
 
       const discountByName = await this.findByName(data.name);
-      if (discountByName) {
+      if (discountByName && discountByName.id !== id) {
         throw new ConflictException(`This discount already exists!`);
       }
 
