@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsString,
   IsOptional,
@@ -20,10 +21,12 @@ export class UpdateDiscountDto {
   @IsOptional()
   percent: number;
 
+  @Type(() => Date)
   @IsDate()
   @IsOptional()
   startDate: Date;
 
+  @Type(() => Date)
   @IsDate()
   @IsOptional()
   endDate: Date;
