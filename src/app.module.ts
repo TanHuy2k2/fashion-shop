@@ -27,6 +27,7 @@ import { ChatModule } from './modules/chat/chat.module';
 import { ReviewModule } from './modules/review/review.module';
 import { DiscountModule } from './modules/discount/discount.module';
 import { ProductDiscountModule } from './modules/product-discount/product-discount.module';
+import { CouponModule } from './modules/coupon/coupon.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { ProductDiscountModule } from './modules/product-discount/product-discou
     ReviewModule,
     DiscountModule,
     ProductDiscountModule,
+    CouponModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
