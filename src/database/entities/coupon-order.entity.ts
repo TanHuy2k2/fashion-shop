@@ -18,7 +18,7 @@ export class CouponOrderEntity extends AbstractEntity {
   @JoinColumn({ name: 'coupon_id' })
   coupon: CouponEntity;
 
-  @ManyToOne(() => OrderEntity, { onDelete: 'CASCADE' })
+  @ManyToOne(() => OrderEntity, (order) => order.couponOrder, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'order_id' })
   order: OrderEntity;
 

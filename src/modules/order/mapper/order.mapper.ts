@@ -26,6 +26,14 @@ export class OrderMapper {
         shippingFee: shipping.shippingFee,
         status: shipping.status,
       })),
+      coupons:
+        order.couponOrder?.map((c: any) => ({
+          id: c.coupon?.id,
+          code: c.coupon?.code,
+          couponType: c.coupon?.couponType,
+          couponValue: c.coupon?.couponValue,
+          maxDiscount: c.coupon?.maxDiscount,
+        })) || [],
     };
   }
 
@@ -42,7 +50,7 @@ export class OrderMapper {
         quantity: detail.quantity,
         review: {
           id: detail.productDetail?.product?.review?.[0]?.id || null,
-        }
+        },
       })),
       shipping: order.shipping?.map((shipping: any) => ({
         id: shipping.id,

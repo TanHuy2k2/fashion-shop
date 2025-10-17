@@ -72,6 +72,16 @@ export class CouponService {
     }
   }
 
+  async increaseUsedCount(id: string): Promise<CouponInterface> {
+    const couponById = await this.findById(id);
+    if (!couponById) {
+      throw new NotFoundException(`No have coupon with id = ${id}`);
+    }
+
+    couponById.usedCount += 1;
+    return await this.couponRepository.save(couponById);
+  }
+
   async update(id: string, data: UpdateCouponDto): Promise<CouponInterface> {
     try {
       const couponById = await this.findById(id);

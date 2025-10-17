@@ -3,7 +3,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
-  CreateDateColumn,
+  Column,
 } from 'typeorm';
 import { CouponEntity } from './coupon.entity';
 import { UserEntity } from './user.entity';
@@ -24,6 +24,6 @@ export class CouponUserEntity extends AbstractEntity {
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @CreateDateColumn({ name: 'used_at' })
-  usedAt: Date;
+  @Column({ name: 'used_at', type: 'timestamp', nullable: true })
+  usedAt: Date | null;
 }

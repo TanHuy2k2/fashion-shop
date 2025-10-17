@@ -13,6 +13,7 @@ import { Status } from '../../commons/enums/status.enum';
 import { ShippingEntity } from './shipping.entity';
 import { PaymentEntity } from './payment.entity';
 import { OrderDetailEntity } from './order-detail.entity';
+import { CouponOrderEntity } from './coupon-order.entity';
 
 @Entity({ name: 'orders' })
 export class OrderEntity extends AbstractEntity {
@@ -50,4 +51,7 @@ export class OrderEntity extends AbstractEntity {
 
   @OneToMany(() => OrderDetailEntity, (orderDetail) => orderDetail.order)
   orderDetail: OrderDetailEntity[];
+
+  @OneToMany(() => CouponOrderEntity, (couponOrder) => couponOrder.order)
+  couponOrder: CouponOrderEntity[];
 }

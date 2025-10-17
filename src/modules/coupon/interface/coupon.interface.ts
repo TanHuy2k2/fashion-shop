@@ -7,6 +7,8 @@ export interface CouponInterface {
   couponValue: number;
   maxDiscount: number | null;
   minOrderValue: number | null;
+  usageLimit: number;
+  usedCount: number;
   startDate: Date;
   endDate: Date;
 }

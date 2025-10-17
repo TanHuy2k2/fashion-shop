@@ -33,9 +33,9 @@ export class OrderService {
     };
   }
 
-  async findByUserId(userId: string){
+  async findByUserId(userId: string) {
     const orders = await this.orderRepository.find({
-      where: { user: {id: userId} },
+      where: { user: { id: userId } },
       relations: [
         'user',
         'orderDetail',
@@ -45,7 +45,7 @@ export class OrderService {
       ],
     });
 
-    return orders.map((order)=>OrderMapper.toUser(order));
+    return orders.map((order) => OrderMapper.toUser(order));
   }
 
   async findOne(id: string): Promise<OrderInterface | null> {
@@ -57,10 +57,12 @@ export class OrderService {
         'orderDetail.productDetail.product',
         'payment',
         'shipping',
+        'couponOrder',
+        'couponOrder.coupon',
       ],
       order: {
         createdAt: 'DESC',
-      }
+      },
     });
 
     return OrderMapper.toResponse(order);

@@ -7,6 +7,8 @@ export class CouponMapper {
       couponValue: coupon.couponValue,
       maxDiscount: coupon.maxDiscount,
       minOrderValue: coupon.minOrderValue,
+      usageLimit: coupon.usageLimit,
+      usedCount: coupon.usedCount,
       startDate: coupon.startDate,
       endDate: coupon.endDate,
     };

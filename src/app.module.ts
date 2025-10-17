@@ -28,6 +28,7 @@ import { ReviewModule } from './modules/review/review.module';
 import { DiscountModule } from './modules/discount/discount.module';
 import { ProductDiscountModule } from './modules/product-discount/product-discount.module';
 import { CouponModule } from './modules/coupon/coupon.module';
+import { CouponOrderModule } from './modules/coupon-order/coupon-order.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { CouponModule } from './modules/coupon/coupon.module';
     DiscountModule,
     ProductDiscountModule,
     CouponModule,
+    CouponOrderModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
